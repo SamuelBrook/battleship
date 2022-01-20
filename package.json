@@ -1,0 +1,23 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "Project to practice test driven development by creating the game Battleship.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamuelBrook/battleship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamuelBrook/battleship/issues"
+  },
+  "homepage": "https://github.com/SamuelBrook/battleship#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.10",
+    "jest": "^27.4.7"
+  }
+}
