@@ -2,11 +2,12 @@ import Ship from "./ship";
 
 test("ship length", () => {
   let newShip = new Ship(10);
-  expect(newShip.length).toBe(10);
+  expect(newShip.shipLength).toBe(10);
 });
 
 test("ship sunk", () => {
-  let newShip = new Ship(10, 10);
+  let newShip = new Ship(10);
+  newShip.hits = 10;
   newShip.hasSunk();
   expect(newShip.sunk).toBe(true);
 });
