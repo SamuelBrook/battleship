@@ -1,7 +1,7 @@
 import Gameboard from "./gameboard";
 
 test("locations of ships", () => {
-  let shipCoordinates = [
+  const shipCoordinates = [
     [1, 5],
     [1, 5],
     [1, 5],
@@ -13,7 +13,7 @@ test("locations of ships", () => {
     [1, 5],
     [1, 5],
   ];
-  let gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard(shipCoordinates);
   gameBoard.callShips();
   gameBoard.placeShips();
   expect(gameBoard.placedShipLocations[0][0][0]).toBe(1);
@@ -22,7 +22,7 @@ test("locations of ships", () => {
 });
 
 test("hit received", () => {
-  let shipCoordinates = [
+  const shipCoordinates = [
     [1, 5],
     [1, 5],
     [1, 5],
@@ -34,14 +34,67 @@ test("hit received", () => {
     [1, 5],
     [1, 5],
   ];
-  let gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard(shipCoordinates);
   gameBoard.callShips();
   gameBoard.placeShips();
-  let shotCoordinate1 = [1, 5];
-  let shotCoordinate2 = [4, 5];
+  const shotCoordinate1 = [1, 5];
+  const shotCoordinate2 = [4, 5];
   gameBoard.attackReceived(shotCoordinate1);
   expect(gameBoard.shipArray[0].hits).toBe(1);
 
   gameBoard.attackReceived(shotCoordinate2);
   expect(gameBoard.shipArray[0].hits).toBe(2);
+});
+
+test("shot missed", () => {
+  const shipCoordinates = [
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+  ];
+  const gameBoard = new Gameboard(shipCoordinates);
+  gameBoard.callShips();
+  gameBoard.placeShips();
+  const shotCoordinate1 = [6, 7];
+  const shotCoordinate2 = [5, 8];
+  gameBoard.attackReceived(shotCoordinate1);
+  expect(gameBoard.shipArray[0].hits).toBe(0);
+
+  gameBoard.attackReceived(shotCoordinate2);
+  expect(gameBoard.shipArray[0].hits).toBe(0);
+});
+
+test("all ships sunk", () => {
+  const shipCoordinates = [
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+    [1, 5],
+  ];
+  const gameBoard = new Gameboard(shipCoordinates);
+  gameBoard.callShips();
+  gameBoard.placeShips();
+
+  expect(gameBoard.allShipsSunk()).toBe(false);
+
+  for (let i = 0; i < gameBoard.shipArray.length; i += 1) {
+    for (let j = 0; j < gameBoard.shipArray[i].shipLength; j += 1) {
+      gameBoard.shipArray[i].hits += 1;
+    }
+    gameBoard.shipArray[i].hasSunk();
+  }
+  expect(gameBoard.allShipsSunk()).toBe(true);
 });
