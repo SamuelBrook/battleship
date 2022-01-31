@@ -13,9 +13,9 @@ test("locations of ships", () => {
     [1, 5],
     [1, 5],
   ];
-  const gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard();
   gameBoard.callShips();
-  gameBoard.placeShips();
+  gameBoard.placeShips(shipCoordinates);
   expect(gameBoard.placedShipLocations[0][0][0]).toBe(1);
   expect(gameBoard.placedShipLocations[0][0][2]).toBe(3);
   expect(gameBoard.placedShipLocations[0][1][0]).toBe(5);
@@ -34,9 +34,9 @@ test("hit received", () => {
     [1, 5],
     [1, 5],
   ];
-  const gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard();
   gameBoard.callShips();
-  gameBoard.placeShips();
+  gameBoard.placeShips(shipCoordinates);
   const shotCoordinate1 = [1, 5];
   const shotCoordinate2 = [4, 5];
   gameBoard.attackReceived(shotCoordinate1);
@@ -59,9 +59,9 @@ test("shot missed", () => {
     [1, 5],
     [1, 5],
   ];
-  const gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard();
   gameBoard.callShips();
-  gameBoard.placeShips();
+  gameBoard.placeShips(shipCoordinates);
   const shotCoordinate1 = [6, 7];
   const shotCoordinate2 = [5, 8];
   gameBoard.attackReceived(shotCoordinate1);
@@ -84,9 +84,9 @@ test("all ships sunk", () => {
     [1, 5],
     [1, 5],
   ];
-  const gameBoard = new Gameboard(shipCoordinates);
+  const gameBoard = new Gameboard();
   gameBoard.callShips();
-  gameBoard.placeShips();
+  gameBoard.placeShips(shipCoordinates);
 
   expect(gameBoard.allShipsSunk()).toBe(false);
 

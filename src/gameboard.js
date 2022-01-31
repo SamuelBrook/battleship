@@ -3,6 +3,8 @@ import Ship from "./ship";
 class Gameboard {
   shipArray = [];
 
+  shipCoordinatesCreated = [];
+
   placedShipLocations = [];
 
   constructor(shipCoordinates) {
@@ -35,17 +37,73 @@ class Gameboard {
     this.shipArray = ships;
   }
 
-  placeShips() {
-    for (let i = 0; i < this.shipArray.length; i += 1) {
-      const { shipLength } = this.shipArray[i];
-      // if horizontal
-      const locationsX = [this.shipCoordinates[i][0]];
-      for (let j = 1; j <= shipLength; j += 1) {
-        locationsX.push(this.shipCoordinates[i][0] + j);
+  createRandomShipCoordinates() {
+    const allShipsCoordinates = [];
+
+    function checkCoordinates(coordinates) {
+      for (let i = 0; i < this.shipCoordinates.length; i += 1) {
+        for (let j = 0; j < this.shipCoordinates[i].length; i += 1) {
+          for (let k = 0; k < coordinates.length; k += 1) {
+            if (this.shipCoordinates[j] === coordinates[k]) {
+              return false;
+            }
+          }
+        }
       }
-      const locationsY = [this.shipCoordinates[i][1]];
-      const newShip = [locationsX, locationsY];
-      this.placedShipLocations.push(newShip);
+      return true;
+    }
+
+    function createCoordinates(i) {
+      // for one ship
+      let coordinateX = [];
+      let coordinateY = [];
+
+      const allShipCoordinates = [];
+      const direction = Math.floor(Math.random() * 2);
+      const { shipLength } = this.shipArray[i];
+      if (direction === 0) {
+        coordinateX = Math.floor(Math.random() * (10 - (shipLength - 1)));
+        coordinateY = Math.floor(Math.random() * 10 + 1);
+        for (let j = 0; j < shipLength; j += 1) {
+          allShipCoordinates.push([coordinateX + j, coordinateY]);
+        }
+      } else {
+        coordinateY = Math.floor(Math.random() * (10 - (shipLength - 1)));
+        coordinateX = Math.floor(Math.random() * 10 + 1);
+        for (let j = 0; j < shipLength; j += 1) {
+          allShipCoordinates.push([coordinateY + j, coordinateX]);
+        }
+      }
+      const checked = checkCoordinates(allShipCoordinates);
+      if (checked) {
+        allShipsCoordinates.push(allShipCoordinates);
+      } else {
+        createCoordinates(i);
+      }
+    }
+
+    for (let i = 0; i < this.shipArray.length; i += 1) {
+      createCoordinates(i);
+    }
+
+    this.shipCoordinatesCreated = allShipsCoordinates;
+  }
+
+  placeShips(shipCoordinates) {
+    if (shipCoordinates) {
+      for (let i = 0; i < this.shipArray.length; i += 1) {
+        const { shipLength } = this.shipArray[i];
+        // if horizontal
+        const locationsX = [shipCoordinates[i][0]];
+        for (let j = 1; j <= shipLength; j += 1) {
+          locationsX.push(shipCoordinates[i][0] + j);
+        }
+        const locationsY = [shipCoordinates[i][1]];
+        const newShip = [locationsX, locationsY];
+        this.placedShipLocations.push(newShip);
+      }
+    } else {
+      this.placedShipLocations = this.shipCoordinatesCreated;
     }
   }
 

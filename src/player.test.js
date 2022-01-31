@@ -37,5 +37,7 @@ test("player shots should never be the same", () => {
     shot10,
   ];
 
+  console.log(shotArray);
+
   expect(shotArray).not.toContain(shot11);
 });

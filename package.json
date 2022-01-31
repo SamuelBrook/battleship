@@ -23,7 +23,8 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.4.7",
-    "prettier": "2.5.1"
+    "prettier": "2.5.1",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {
     "eslint-plugin-jest": "^26.0.0"
