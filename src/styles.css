@@ -1,0 +1,21 @@
+#container {
+  display: flex;
+  gap: 120px;
+  padding: 40px;
+}
+
+.board {
+  height: 500px;
+  width: 500px;
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.coordinate {
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+}
