@@ -39,17 +39,18 @@ class Gameboard {
 
   createRandomShipCoordinates() {
     const allShipsCoordinates = [];
+    const shipArrayA = this.shipArray;
 
     function checkCoordinates(coordinates) {
-      for (let i = 0; i < this.shipCoordinates.length; i += 1) {
-        for (let j = 0; j < this.shipCoordinates[i].length; i += 1) {
-          for (let k = 0; k < coordinates.length; k += 1) {
-            if (this.shipCoordinates[j] === coordinates[k]) {
-              return false;
-            }
-          }
-        }
-      }
+      // for (let i = 0; i < allShipsCoordinates.length; i += 1) {
+      //   for (let j = 0; j < allShipsCoordinates[i].length; i += 1) {
+      //     for (let k = 0; k < coordinates.length; k += 1) {
+      //       if (allShipsCoordinates[j] === coordinates[k]) {
+      //         return false;
+      //       }
+      //     }
+      //   }
+      // }
       return true;
     }
 
@@ -60,18 +61,18 @@ class Gameboard {
 
       const allShipCoordinates = [];
       const direction = Math.floor(Math.random() * 2);
-      const { shipLength } = this.shipArray[i];
+      const length = shipArrayA[i].shipLength;
       if (direction === 0) {
-        coordinateX = Math.floor(Math.random() * (10 - (shipLength - 1)));
+        coordinateX = Math.floor(Math.random() * (10 - (length - 1)));
         coordinateY = Math.floor(Math.random() * 10 + 1);
-        for (let j = 0; j < shipLength; j += 1) {
+        for (let j = 0; j < length; j += 1) {
           allShipCoordinates.push([coordinateX + j, coordinateY]);
         }
       } else {
-        coordinateY = Math.floor(Math.random() * (10 - (shipLength - 1)));
+        coordinateY = Math.floor(Math.random() * (10 - (length - 1)));
         coordinateX = Math.floor(Math.random() * 10 + 1);
-        for (let j = 0; j < shipLength; j += 1) {
-          allShipCoordinates.push([coordinateY + j, coordinateX]);
+        for (let j = 0; j < length; j += 1) {
+          allShipCoordinates.push([coordinateX, coordinateY + j]);
         }
       }
       const checked = checkCoordinates(allShipCoordinates);

@@ -1,7 +1,20 @@
+#title {
+  font-family: sans-serif;
+  font-size: 80px;
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
 #container {
   display: flex;
   gap: 120px;
   padding: 40px;
+}
+
+#game-flow {
+  font-family: sans-serif;
+  font-size: 40px;
+  margin-left: 40px;
 }
 
 .board {
@@ -15,7 +28,11 @@
 }
 
 .coordinate {
-  border-style: solid;
+  border-style: dotted;
   border-width: thin;
   border-color: black;
+}
+
+.ship {
+  background-color: rgb(55, 0, 255);
 }
