@@ -36,3 +36,7 @@
 .ship {
   background-color: rgb(55, 0, 255);
 }
+
+.hit {
+  background-color: red;
+}

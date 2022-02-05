@@ -30,19 +30,6 @@ const setUpBoards = () => {
   });
 };
 
-const playerShotLocation = () => {
-  const board2 = document.querySelector("#enemy-board");
-  const squares = board2.childNodes;
-  squares.forEach((square) => {
-    square.addEventListener("click", (e) => {
-      const { target } = e;
-      const squareID = target.id;
-      console.log(squareID);
-      return squareID;
-    });
-  });
-};
-
 const showShips = (gameboard1, gameboard2) => {
   const board1 = document.querySelector("#player-board");
   const board2 = document.querySelector("#enemy-board");
@@ -63,4 +50,14 @@ const showShips = (gameboard1, gameboard2) => {
   populateGrid(gameboard2, board2);
 };
 
-export { setUpBoards, playerShotLocation, showShips };
+const showHit = (coordinate) => {
+  const board = document.querySelector("#enemy-board");
+  const squares = board.childNodes;
+  squares.forEach((square) => {
+    if (coordinate === square.id) {
+      square.classList.add("hit");
+    }
+  });
+};
+
+export { setUpBoards, showHit, showShips };

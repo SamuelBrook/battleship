@@ -111,28 +111,30 @@ class Gameboard {
   attackReceived(shotCoordinates) {
     let matchX = false;
     let matchY = false;
+    let hit = false;
     for (let i = 0; i < this.placedShipLocations.length; i += 1) {
       // let length = this.placedShipLocations[i][0].length;
-      for (let j = 0; j < this.placedShipLocations[i][0].length; j += 1) {
+      for (let j = 0; j < this.placedShipLocations[i].length; j += 1) {
         // go into the first element of the ships' coordinates (the x coordinates)
         // if the shot x coordinate is same as any x coordinate for this ship then matchX = true
-        if (shotCoordinates[0] === this.placedShipLocations[i][0][j]) {
+        if (shotCoordinates[0] === this.placedShipLocations[i][j][0]) {
           matchX = true;
         }
       }
-      for (let j = 0; j < this.placedShipLocations[i][1].length; j += 1) {
+      for (let j = 0; j < this.placedShipLocations[i].length; j += 1) {
         // go into the second element of the ships' coordinates (the y coordinates)
         // if the shot y coordinate is the same as any y coordinate for this ship then matchY = true
-        if (shotCoordinates[1] === this.placedShipLocations[i][1][j]) {
+        if (shotCoordinates[1] === this.placedShipLocations[i][j][1]) {
           matchY = true;
         }
       }
       if (matchX && matchY) {
         this.shipArray[i].hits += 1;
         this.shipArray[i].hasSunk();
-        break;
+        hit = true;
       }
     }
+    return hit;
   }
 
   allShipsSunk() {
