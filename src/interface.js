@@ -50,14 +50,47 @@ const showShips = (gameboard1, gameboard2) => {
   populateGrid(gameboard2, board2);
 };
 
-const showHit = (coordinate) => {
-  const board = document.querySelector("#enemy-board");
-  const squares = board.childNodes;
-  squares.forEach((square) => {
-    if (coordinate === square.id) {
-      square.classList.add("hit");
-    }
-  });
+const winLose = (win) => {
+  const container = document.querySelector("#container");
+  const boards = container.childNodes;
+
+  if (win === true) {
+    boards.remove();
+    const winnerBanner = document.createElement("div");
+    winnerBanner.id = "win-banner";
+    winnerBanner.textContent = "YOU WIN! ALL ENEMY SHIPS SUNK! PLAY AGAIN?";
+    container.appendChild(winnerBanner);
+  } else {
+    const loserBanner = document.createElement("div");
+    loserBanner.id = "lose-banner";
+    loserBanner.textContent = "YOU LOSE! ALL SHIPS SUNK! PLAY AGAIN?";
+    container.appendChild(loserBanner);
+  }
 };
 
-export { setUpBoards, showHit, showShips };
+const boardHitMiss = (shot, hit, player) => {
+  const playerBoard = player;
+  if (playerBoard === true) {
+    const board = document.querySelector("#player-board");
+    const squares = board.childNodes;
+    squares.forEach((square) => {
+      if (square.id === shot && hit === true) {
+        square.classList.add("hit");
+      } else if (square.id === shot) {
+        square.classList.add("miss");
+      }
+    });
+  } else {
+    const board = document.querySelector("#enemy-board");
+    const squares = board.childNodes;
+    squares.forEach((square) => {
+      if (square.id === shot && hit === true) {
+        square.classList.add("hit");
+      } else if (square.id === shot) {
+        square.classList.add("miss");
+      }
+    });
+  }
+};
+
+export { setUpBoards, boardHitMiss, showShips, winLose };

@@ -1,8 +1,7 @@
-import { setUpBoards, showHit, showShips } from "./interface";
+import { setUpBoards, winLose, showShips, boardHitMiss } from "./interface";
 import Gameboard from "./gameboard";
 import Player from "./player";
 
-// eslint-disable-next-line no-unused-vars
 const gameLoop = (() => {
   // display boards
   setUpBoards();
@@ -30,29 +29,45 @@ const gameLoop = (() => {
 
   const computerBoard = document.querySelector("#enemy-board");
   computerBoard.addEventListener("click", (e) => {
+    // playerShot
     const { target } = e;
     const shotCoordinatesString = target.id;
     const shotCoordinatesNumeric = shotCoordinatesString
       .split(" ")
       .map((x) => parseInt(x, 10));
-    console.log(shotCoordinatesNumeric);
-    console.log(gameboardTwo.placedShipLocations);
 
     playerOne.makeShot(shotCoordinatesNumeric);
-    const hit = gameboardTwo.attackReceived(shotCoordinatesNumeric);
-    console.log(hit);
-    if (hit === true) {
-      showHit(shotCoordinatesString);
-      // call function which makes ship hit on board
-      // check if ship sunk, if not continue, if yes ship coordinates turn into ship sunk aesthetic
-      // check if all ships sunk, if not continue, if
+    const playerHit = gameboardTwo.attackReceived(shotCoordinatesNumeric);
+    if (playerHit === true) {
+      boardHitMiss(shotCoordinatesString, true, false);
+      if (gameboardTwo.allShipsSunk()) {
+        winLose(true);
+      }
     } else {
-      // call function which makes miss on board
+      boardHitMiss(shotCoordinatesString, false, false);
     }
-
-    // delay of 5 seconds
+    console.log(playerOne.shotArray);
 
     // computer's turn
+    const computerShotNumeric = playerTwo.makeShot();
+    const computerShotString = computerShotNumeric
+      .map((x) => x.toString())
+      .join(" ");
+
+    console.log(computerShotString);
+    console.log(computerShotNumeric);
+
+    const computerHit = gameboardOne.attackReceived(computerShotNumeric);
+    if (computerHit === true) {
+      boardHitMiss(computerShotString, true, true);
+      if (gameboardOne.allShipsSunk()) {
+        winLose(false);
+      }
+    } else {
+      boardHitMiss(computerShotString, false, true);
+    }
+
+    // make sure player cant shoot at already shot coordinates or computer will still be able to shoot even though player didnt hit a new coordinate.
   });
 
   //

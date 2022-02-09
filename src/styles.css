@@ -40,3 +40,7 @@
 .hit {
   background-color: red;
 }
+
+.miss {
+  background-color: yellow;
+}

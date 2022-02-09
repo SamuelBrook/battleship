@@ -15,16 +15,25 @@ class Player {
     }
 
     if (playerShot) {
-      if (this.shotArray.includes(playerShot)) {
+      let playerShotUsed = false;
+      for (let i = 0; i < this.shotArray.length; i += 1) {
+        if (this.shotArray[i] === playerShot) {
+          playerShotUsed = true;
+        }
+      }
+      if (playerShotUsed) {
         // shouldnt work and player can take a shot again
+        console.log("nada");
       } else {
         this.shotArray.push(playerShot);
         return playerShot;
       }
     } else {
       const computerShot = autoShot(this.shotArray);
+      this.shotArray.push(computerShot);
       return computerShot;
     }
+    console.log(this.shotArray);
   }
 }
 
