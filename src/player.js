@@ -1,39 +1,37 @@
 class Player {
   shotArray = [0, 0];
 
+  shotArrayPlayer = [0, 0];
+
+  playerShot(shot, array) {
+    for (let i = 0; i < array.length; i += 1) {
+      if (shot[0] === array[i][0] && shot[1] === array[i][1]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   makeShot(playerShot) {
     // eslint-disable-next-line consistent-return
-    function autoShot(shotArray) {
+    function autoShot() {
       const autoShotX = Math.floor(Math.random() * 10) + 1;
       const autoShotY = Math.floor(Math.random() * 10) + 1;
       const autoShotCoordinates = [autoShotX, autoShotY];
-      if (shotArray.includes(autoShotCoordinates)) {
-        this.autoshot();
-      } else {
-        return autoShotCoordinates;
-      }
+      return autoShotCoordinates;
     }
 
     if (playerShot) {
-      let playerShotUsed = false;
-      for (let i = 0; i < this.shotArray.length; i += 1) {
-        if (this.shotArray[i] === playerShot) {
-          playerShotUsed = true;
-        }
-      }
-      if (playerShotUsed) {
-        // shouldnt work and player can take a shot again
-        console.log("nada");
-      } else {
-        this.shotArray.push(playerShot);
-        return playerShot;
-      }
-    } else {
-      const computerShot = autoShot(this.shotArray);
-      this.shotArray.push(computerShot);
-      return computerShot;
+      this.shotArrayPlayer.push(playerShot);
+      return playerShot;
     }
-    console.log(this.shotArray);
+
+    const computerShot = autoShot();
+    if (this.playerShot(computerShot, this.shotArray)) {
+      return this.makeShot();
+    }
+    this.shotArray.push(computerShot);
+    return computerShot;
   }
 }
 

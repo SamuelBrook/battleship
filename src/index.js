@@ -26,7 +26,6 @@ const gameLoop = (() => {
 
   // show the ships visibly on the player's gameboard
   showShips(gameboardOne, gameboardTwo);
-
   const computerBoard = document.querySelector("#enemy-board");
   computerBoard.addEventListener("click", (e) => {
     // playerShot
@@ -35,39 +34,42 @@ const gameLoop = (() => {
     const shotCoordinatesNumeric = shotCoordinatesString
       .split(" ")
       .map((x) => parseInt(x, 10));
-
+    if (
+      playerOne.playerShot(shotCoordinatesNumeric, playerOne.shotArrayPlayer)
+    ) {
+      return;
+    }
     playerOne.makeShot(shotCoordinatesNumeric);
     const playerHit = gameboardTwo.attackReceived(shotCoordinatesNumeric);
     if (playerHit === true) {
-      boardHitMiss(shotCoordinatesString, true, false);
-      if (gameboardTwo.allShipsSunk()) {
+      gameboardTwo.hits += 1;
+      console.log(gameboardTwo.hits);
+      // console.log(gameboardTwo.allShipsSunk());
+      if (gameboardTwo.allShipsSunk() || gameboardTwo.hits === 19) {
         winLose(true);
       }
+      boardHitMiss(shotCoordinatesString, true, false);
     } else {
       boardHitMiss(shotCoordinatesString, false, false);
     }
-    console.log(playerOne.shotArray);
 
     // computer's turn
+
     const computerShotNumeric = playerTwo.makeShot();
     const computerShotString = computerShotNumeric
       .map((x) => x.toString())
       .join(" ");
-
-    console.log(computerShotString);
-    console.log(computerShotNumeric);
-
     const computerHit = gameboardOne.attackReceived(computerShotNumeric);
     if (computerHit === true) {
-      boardHitMiss(computerShotString, true, true);
-      if (gameboardOne.allShipsSunk()) {
+      gameboardOne.hits += 1;
+      // console.log(gameboardOne.allShipsSunk());
+      if (gameboardOne.allShipsSunk() || gameboardOne.hits === 20) {
         winLose(false);
       }
+      boardHitMiss(computerShotString, true, true);
     } else {
       boardHitMiss(computerShotString, false, true);
     }
-
-    // make sure player cant shoot at already shot coordinates or computer will still be able to shoot even though player didnt hit a new coordinate.
   });
 
   //

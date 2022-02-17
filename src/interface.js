@@ -52,20 +52,33 @@ const showShips = (gameboard1, gameboard2) => {
 
 const winLose = (win) => {
   const container = document.querySelector("#container");
-  const boards = container.childNodes;
+
+  const board1 = document.querySelector("#enemy-board");
+  const board2 = document.querySelector("#player-board");
+
+  board1.remove();
+  board2.remove();
+
+  const playAgainContainer = document.createElement("div");
+  playAgainContainer.id = "play-again-container";
+  container.appendChild(playAgainContainer);
 
   if (win === true) {
-    boards.remove();
     const winnerBanner = document.createElement("div");
     winnerBanner.id = "win-banner";
-    winnerBanner.textContent = "YOU WIN! ALL ENEMY SHIPS SUNK! PLAY AGAIN?";
-    container.appendChild(winnerBanner);
+    winnerBanner.textContent = "YOU WIN! ALL ENEMY SHIPS SUNK!";
+    playAgainContainer.appendChild(winnerBanner);
   } else {
     const loserBanner = document.createElement("div");
     loserBanner.id = "lose-banner";
-    loserBanner.textContent = "YOU LOSE! ALL SHIPS SUNK! PLAY AGAIN?";
-    container.appendChild(loserBanner);
+    loserBanner.textContent = "YOU LOSE! ALL SHIPS SUNK!";
+    playAgainContainer.appendChild(loserBanner);
   }
+
+  const playAgain = document.createElement("div");
+  playAgain.id = "play-again";
+  playAgain.textContent = "Play Again?";
+  playAgainContainer.appendChild(playAgain);
 };
 
 const boardHitMiss = (shot, hit, player) => {

@@ -7,6 +7,8 @@ class Gameboard {
 
   placedShipLocations = [];
 
+  hits = 0;
+
   constructor(shipCoordinates) {
     this.shipCoordinates = shipCoordinates;
   }
@@ -42,14 +44,20 @@ class Gameboard {
     const shipArrayA = this.shipArray;
 
     function checkCoordinates(coordinates) {
+      for (let i = 0; i < coordinates.length; i += 1) {
+        for (let j = 0; j < allShipsCoordinates.length; j += 1) {
+          for (let k = 0; k < allShipsCoordinates[j].length; k += 1) {
+            if (
+              coordinates[i][0] === allShipsCoordinates[j][k][0] &&
+              coordinates[i][1] === allShipsCoordinates[j][k][1]
+            ) {
+              return false;
+            }
+          }
+        }
+      }
       // for (let i = 0; i < allShipsCoordinates.length; i += 1) {
-      //   for (let j = 0; j < allShipsCoordinates[i].length; i += 1) {
-      //     for (let k = 0; k < coordinates.length; k += 1) {
-      //       if (allShipsCoordinates[j] === coordinates[k]) {
-      //         return false;
-      //       }
-      //     }
-      //   }
+
       // }
       return true;
     }
@@ -59,25 +67,25 @@ class Gameboard {
       let coordinateX = [];
       let coordinateY = [];
 
-      const allShipCoordinates = [];
+      const shipCoordinates = [];
       const direction = Math.floor(Math.random() * 2);
       const length = shipArrayA[i].shipLength;
       if (direction === 0) {
         coordinateX = Math.floor(Math.random() * (10 - (length - 1)));
         coordinateY = Math.floor(Math.random() * 10 + 1);
         for (let j = 0; j < length; j += 1) {
-          allShipCoordinates.push([coordinateX + j, coordinateY]);
+          shipCoordinates.push([coordinateX + j, coordinateY]);
         }
       } else {
         coordinateY = Math.floor(Math.random() * (10 - (length - 1)));
         coordinateX = Math.floor(Math.random() * 10 + 1);
         for (let j = 0; j < length; j += 1) {
-          allShipCoordinates.push([coordinateX, coordinateY + j]);
+          shipCoordinates.push([coordinateX, coordinateY + j]);
         }
       }
-      const checked = checkCoordinates(allShipCoordinates);
+      const checked = checkCoordinates(shipCoordinates);
       if (checked) {
-        allShipsCoordinates.push(allShipCoordinates);
+        allShipsCoordinates.push(shipCoordinates);
       } else {
         createCoordinates(i);
       }
@@ -116,11 +124,9 @@ class Gameboard {
       for (let j = 0; j < this.placedShipLocations[i].length; j += 1) {
         const shipX = this.placedShipLocations[i][j][0];
         const shipY = this.placedShipLocations[i][j][1];
-        // console.log(shipX, shipY);
         if (shipX === shotX && shipY === shotY) {
           this.shipArray[i].hits += 1;
           this.shipArray[i].hasSunk();
-          console.log(this.shipArray[i].sunk);
           hit = true;
         }
       }
